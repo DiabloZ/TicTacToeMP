@@ -2,6 +2,7 @@ package presentation.screens
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
@@ -12,19 +13,23 @@ import presentation.elements.HeaderOfGame
 import utils.CharStates
 
 @Composable
-fun TicTacToeScreen() {
+fun TicTacToeScreen(
+	status: () -> String
+) {
 
 	Column(
 		modifier = Modifier.padding(16.dp)
 	) {
 		HeaderOfGame(
-			text = { "Какой-то статус" },
+			text = status,
 			onNewGameClickListener = {
 
 			},
 			modifier = Modifier
 		)
-		Column {
+		Column(
+			modifier = Modifier.aspectRatio(1f)
+		) {
 			repeat(3){ columnIndex ->
 				Row(Modifier.weight(1f)) {
 					repeat(3){ rowIndex ->
