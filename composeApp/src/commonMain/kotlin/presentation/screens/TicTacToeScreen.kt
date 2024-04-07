@@ -10,11 +10,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import presentation.elements.CharBox
 import presentation.elements.HeaderOfGame
-import utils.CharStates
+import domain.models.CharStates
 
 @Composable
 fun TicTacToeScreen(
-	status: () -> String
+	status: () -> String,
+	field: () -> List<List<CharStates>>,
+	onClickField: (TicTacToeIntent.OnClick) -> Unit,
+	onRestart: () -> Unit,
 ) {
 
 	Column(
@@ -22,9 +25,7 @@ fun TicTacToeScreen(
 	) {
 		HeaderOfGame(
 			text = status,
-			onNewGameClickListener = {
-
-			},
+			onNewGameClickListener = onRestart,
 			modifier = Modifier
 		)
 		Column(
@@ -34,9 +35,11 @@ fun TicTacToeScreen(
 				Row(Modifier.weight(1f)) {
 					repeat(3){ rowIndex ->
 						CharBox(
-							charState = CharStates.entries[rowIndex],
+							charState = field.invoke()[columnIndex][rowIndex],
 							onClick = {
-								columnIndex + rowIndex
+								onClickField.invoke(
+									TicTacToeIntent.OnClick(columnIndex, rowIndex)
+								)
 							},
 							modifier = Modifier.weight(1f).fillMaxSize()
 						)
