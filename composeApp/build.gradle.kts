@@ -42,6 +42,23 @@ kotlin {
             implementation(compose.ui)
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
+            implementation(libs.kotlinx.coroutines.core)
+            //val lifecycle_version = "2.8.0-alpha04"
+            //implementation("androidx.lifecycle:lifecycle-viewmodel:$lifecycle_version")
+            //implementation("androidx.lifecycle:lifecycle-viewmodel-compose:$lifecycle_version")
+
+            dependencies {
+                commonMainApi(libs.mvvm.core) // only ViewModel, EventsDispatcher, Dispatchers.UI
+                commonMainApi(libs.mvvm.flow) // api mvvm-core, CFlow for native and binding extensions
+
+                // compose multiplatform
+                commonMainApi(libs.mvvm.compose) // api mvvm-core, getViewModel for Compose Multiplatform
+                commonMainApi(libs.mvvm.flow.compose) // api mvvm-flow, binding extensions for Compose Multiplatform
+                commonMainApi(libs.mvvm.livedata.compose) // api mvvm-livedata, binding extensions for Compose Multiplatform
+
+                commonTestImplementation(libs.mvvm.test) // test utilities
+            }
+
         }
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)
